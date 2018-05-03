@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Assembler Linker Loader</title>
+		<link rel='shortcut icon' href='static/q.png' type='image/x-icon'/ >
+		<link type="text/css" rel="stylesheet" href="static/css/icon.css" />
+		<link type="text/css" rel="stylesheet" href="static/css/materialize.css" media="screen,projection"/>
+		<link type="text/css" rel="stylesheet" href="static/css/main.css" media="screen,projection"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	</head>
+	<body>
+
+		<header>
+			<nav>
+			    <div class="nav-wrapper grey darken-4 ">
+				  <a class="side-btn white-text brand-logo" plink="titleBox">Assembler | Linker | Loader</a></li>
+			      <div class="col offset-s1 s10 offset-s1 " style="text-align: right; ">
+				  <a class="btn side-btn grey black-text "  plink="input-files">Input Code Files</a> 
+				  <!-- <a class="btn side-btn grey black-text "  plink="titleBox">Initialize</a> -->
+				  <a class="btn side-btn grey black-text "  plink="pass1">Pass1/Compiler</a>
+				  <a class="btn side-btn grey black-text "  plink="pass2">Pass2</a></li>
+				  <a class="btn side-btn grey black-text "  plink="linker">Linker</a></li>
+				 <a  class="btn side-btn grey black-text "  plink="simulator" >Simulator</a></li>
+			      </div>
+			    </div>
+			</nav>
+		</header>
+		<!-- <ul class="mdc-list">
+		  <li class="mdc-list-item">Single-line item</li>
+		  <li class="mdc-list-item">Single-line item</li>
+		  <li class="mdc-list-item">Single-line item</li>
+		</ul> -->
+		<!-- <ul>
+		 <li><a class="side-btn white-text breadcrumb"  plink="input-files">INPUT FILES</a></li>
+				  <li><a class="side-btn white-text breadcrumb"  plink="pass1">PASS 1</a></li>
+				  <li><a class="side-btn white-text breadcrumb"  plink="pass2">PASS 2</a></li>
+				  <li><a class="side-btn white-text breadcrumb"  plink="linker">LINKER</a></li>
+				  <li><a class="side-btn white-text breadcrumb"  plink="simulator">SIMULATOR</a></li>
+		</ul> -->
+
+		<main class="grey lighten-5">
+			<div class="container" style="min-height: 87vh">
+				<!-- Landing Page -->
+				<!-- <div style="padding-top: 1%">
+					<div class = "row" id="titleBox">
+					  <div class="col s8 offset-s2">
+					    <div class="card-panel grey darken-3 hoverable"  style="margin:0px auto;">		 		
+					      <span class="white-text" style="text-align: center;font-size:40px;">
+							<center>Group Members</center>
+					      </span>
+							<br>
+							<div class=" white-text" style="text-align: center;">
+							<br>
+							Arpan Konar
+							<br>
+							Arpit Gupta
+							<br>
+							Debangshu Banerjee
+							</div>
+					    </div>
+					  </div>
+					</div>
+				</div> -->
+				<div style="padding-top: 1%">
+					<div class = "row" id="titleBox">
+					  <div class="col s4 offset-s4">
+					    <div class="card-panel grey darken-3 hoverable"  style="margin:0px auto;">	
+
+					      <!-- <span class="white-text" style="text-align: center;font-size:40px;">
+							<center class="btn">Error Details</center>
+					      </span>
+							<br> -->
+							<!-- <div class=" white-text" style="text-align: center;" >
+							<br>
+							Arpan Konar
+							<br>
+							Arpit Gupta
+							<br>
+							Debangshu Banerjee
+							dfju
+							</div> -->
+							<div class=" white-text"  style="text-align: center;">
+							<center class="btn grey black-text " id="error_details"  >Error Details</center>
+
+							</div>
+
+
+							<div class=" white-text" id="error_list" style="text-align: center;">
+<!-- 
+							 	{% for message in get_flashed_messages() %}
+							<div class="alert alert-warning">
+								<button type="button" class="close" data-dismiss="alert">&times;</button>
+								{{message}}
+							</div>
+							{%endfor%} -->
+							
+
+							</div>
+					    </div>
+					  </div>
+					</div>
+				</div>
+				<div id="input-files" style="padding-left: 20%;padding-right: 20%;">
+					<form id="input-form" method="post">
+					  <div class="file-field input-field">
+					    <div class="btn black darken-1">
+					      <span>Select Files</span>
+					      <input type="file" name="file" multiple>
+					    </div>
+					    <div class="file-path-wrapper tab-indicator-black" >
+					      <input class="file-path validate  black-text" type="text" placeholder="Upload one or more files">
+					    </div>
+						<div style="padding-left: 45%">
+					    <button class="btn waves-effect black darken-2 " type="button" id="submit-button" name="submit">Submit<!-- <i class="material-icons right">send</i> -->
+					  	</button><br>
+					  	
+					  	</div>
+					  	
+					  </div>
+					</form>
+					<div id='file-data'></div>
+				</div>
+				<div id="pass1"></div>
+				<div id="pass2"></div>
+				<div id="linker">
+					<div class="row">
+					  <div class="col s4 offset-s4">
+					    <div class="card-panel black lighten-4 hoverable white-text" style="margin:0px auto;">						 
+					      <span class="white-text" id="linkText">
+								Linker Output
+					      </span>
+					    </div>
+					  </div>
+					</div>       
+				</div>
+				<div id="simulator">
+					<div class="row">
+					  <div class="col s3" style="text-align: center">			 		
+					      <div class="input-field col s6">
+			      	        <input placeholder="Offset" style="left-margin:5px;" id="offset" type="text" class="validate" >
+			      	      </div>
+					      <span class="white-text">
+					      	<a class="btn black white-text" id="loadButton">simulate</a>
+					      	<!-- <a class="btn side-btn white-text "  id="loadButton">Simulate</a> -->
+					      	<!-- <button class="btn btn-primary" id="loadButton">start simulation</button> -->
+						</span>
+					  </div>
+					  <div class="col s4 ">
+					    <div class="card-panel black lighten-4 hoverable white-text"  style="margin:0px auto;">
+					 		
+					      <span class="white-text" id="currentInst">
+							Nothing Loaded yet
+					      </span>
+					    </div>
+					  </div>
+					  <div class="col s3" style="text-align: center">
+					 		
+					      <span class="white-text">
+							<a class="btn black white-text" id="runButton">Run Forward</a><br>
+						</span>
+					  </div>
+					</div>
+					<div class="row">
+					  <div class="col s6" style="display:block">
+					    <div class="card-panel black lighten-4 hoverable white-text col s12" style="margin:20px auto;padding:10px;">
+					      <span class="" id="registers">
+							Registers	
+					      </span>
+					    </div>
+					    <div class="card-panel black lighten-4 hoverable white-text col s12" style="margin:20px auto;padding:10px;">
+					    	<span class="" id="varlocs">
+					    	Variable Location
+					    	</span>
+					    </div>
+					  </div>
+					  <div class="col s6 ">
+					  <br>
+					    <div class="card-panel black lighten-4 hoverable white-text" style="margin:0px auto;padding:10px;">
+					 		
+					      <span class="" id="memlocs">
+							Memory Location
+					      </span>
+					    </div>
+					    
+					  </div>
+					</div>
+				</div>
+			</div>
+		</main>
+		
+		<footer class="page-footer" >
+          <div class="footer-copyright grey darken-4">
+            <div class="container">
+        	CS-244 :- Assembler | Linker | Loader | Simulation
+            <!-- <span class="grey-text text-lighten-4 right">Indian Institute of Technology Guwahati</span> -->
+            </div>
+          </div>
+        </footer>
+		
+	</body>
+		<script type="text/javascript" src="static/js/jquery.js"></script>
+		<script type="text/javascript" src="static/js/materialize.js"></script>
+		<script type="text/javascript" src="static/js/main.js"></script>
+</html>
